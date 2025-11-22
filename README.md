@@ -138,17 +138,41 @@ Model Name [Qwen/Qwen3-0.6B]:
 
 ## 🧪 测试
 
-运行测试套件：
+### 自动化测试
+
+运行自动化测试套件（自动执行并对比结果）：
 
 ```bash
 # 运行所有测试用例
-./test_gen.sh
+python3 tests/run_automated_tests.py
 
-# 查看测试结果
-cat TEST_RESULTS.md
+# 显示详细信息
+python3 tests/run_automated_tests.py --verbose
+
+# 或使用 shell 脚本
+./tests/run_tests.sh
 ```
 
-详细测试用例和结果见 [TEST_CASES.md](docs/TEST_CASES.md)
+### 单元测试
+
+使用 pytest 运行单元测试：
+
+```bash
+# 安装测试依赖
+pip install pytest pytest-cov
+
+# 运行所有测试
+pytest tests/
+
+# 运行特定测试
+pytest tests/test_config.py -v
+```
+
+### 测试用例
+
+测试用例定义在 [TEST_CASES.md](docs/TEST_CASES.md)，包含 10 个测试场景。
+
+测试结果和说明见 [tests/README.md](tests/README.md)
 
 ## 📁 项目结构
 
