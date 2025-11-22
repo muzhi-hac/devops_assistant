@@ -44,6 +44,7 @@ test_output_*.txt
 parallax_ops.egg-info/
 *.egg-info/
 diagnose_parallax.sh
+p2p.key
 
 # Config (user-specific)
 .config/
