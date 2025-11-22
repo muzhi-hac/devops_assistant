@@ -134,7 +134,6 @@ Model Name [Qwen/Qwen3-0.6B]:
 - **Mac (Scheduler)**: 运行调度器和部分模型层
 - **Azure VM (Worker)**: 运行部分模型层，共享 GPU 资源
 
-详见 [PARALLAX_CLUSTER_SETUP.md](PARALLAX_CLUSTER_SETUP.md)
 
 ## 🧪 测试
 
