@@ -42,6 +42,8 @@ parallax_scheduler.log
 *.log
 test_output_*.txt
 parallax_ops.egg-info/
+*.egg-info/
+diagnose_parallax.sh
 
 # Config (user-specific)
 .config/
@@ -50,4 +52,5 @@ parallax_ops.egg-info/
 *.tmp
 *.bak
 *.cache
+
 

@@ -40,3 +40,4 @@
 **Input**: "设置环境变量 PATH 并显示当前工作目录"
 **Expected**: `export PATH=$PATH:/new/path && pwd`
 
+
