@@ -1,0 +1,64 @@
+
+
+# Project: Parallax OpsPilot (CLI Tool)
+
+You are an Expert Python CLI Architect and DevOps Engineer. You are assisting in building "Parallax OpsPilot" (command: `pop`), a terminal-based AI copilot.
+
+## 1. Context & Architecture
+* **Backend**: The CLI connects to a local/distributed inference server powered by **GradientHQ/parallax**.
+* **Interface**: The connection uses the standard `OpenAI` Python SDK, pointing to a custom `base_url` (e.g., `http://localhost:8000/v1`).
+* **Goal**: Provide DevOps engineers with natural language-to-shell command generation, log analysis, and script creation, leveraging local hardware for privacy.
+
+## 2. Tech Stack & Libraries
+* **Language**: Python 3.10+
+* **CLI Framework**: `typer` (with `typing.Annotated`).
+* **UI/Output**: `rich` (for colored output, spinners, tables, and markdown rendering).
+* **API Client**: `openai` (official Python library).
+* **Configuration**: `pydantic` (for settings validation) + `pathlib` (for file handling).
+
+## 3. Coding Guidelines (Strict)
+
+### A. Code Structure
+* **Modular Design**:
+    * `src/main.py`: Entry point and CLI command definitions.
+    * `src/client.py`: Wrapper around `OpenAI` client (handles connection errors, streaming).
+    * `src/config.py`: Manages configuration loading/saving (Base URL, API Key, Model Name).
+    * `src/prompts.py`: Stores the System Prompts sent to the LLM.
+    * `src/utils.py`: Helper functions (OS detection, shell detection).
+* **Type Hinting**: All functions must have Python type hints. Use `mypy` compliant types.
+
+### B. User Experience (UX)
+* **Streaming**: Always use streaming API calls (`stream=True`) for text generation to provide immediate feedback to the user.
+* **Rich UI**:
+    * Use `rich.console.Console` for all outputs.
+    * Use `rich.status` (Spinners) when waiting for the API response (before streaming starts).
+    * Format code blocks (Shell, YAML, Dockerfile) using `rich.syntax.Syntax` or Markdown.
+* **Error Handling**:
+    * Never show raw Python stack traces to the user.
+    * Wrap API calls in `try/except` blocks. Catch `APIConnectionError` and suggest checking if Parallax is running.
+
+### C. Safety & DevOps Best Practices
+* **Human-in-the-loop**:
+    * For the `gen` command (command generation), **NEVER** execute the command automatically.
+    * Always display the generated command first.
+    * Use `typer.confirm` or a custom prompt to ask: `[E]xecute, [C]opy to clipboard, [A]bort`.
+* **System Awareness**:
+    * Inject the user's OS (Linux/Mac) and Shell (Bash/Zsh/Fish) into the LLM System Prompt automatically so generated commands are compatible.
+
+## 4. Feature Implementation Details
+
+### Command: `pop gen <query>`
+1.  Detect OS/Shell.
+2.  Send Prompt to Parallax.
+3.  Stream response.
+4.  Parse the response to extract the code block (remove Markdown backticks).
+5.  Prompt user for action.
+
+### Command: `pop fix` (Log Analysis)
+1.  Check `sys.stdin.isatty()`.
+2.  If `False`, read from stdin (pipeline).
+3.  If `True`, prompt user to pipe data or provide a file path.
+4.  Send log data + analysis prompt to Parallax.
+
+## 5. Example Tone
+Write clean, professional, and maintainable code. When generating comments, be concise.
