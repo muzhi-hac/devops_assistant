@@ -1,5 +1,33 @@
 # 快速启动指南
 
+## 前置要求
+
+### 确保 Parallax 已安装
+
+如果遇到 `parallax: command not found` 错误，请先安装 Parallax：
+
+```bash
+# 检查 Parallax 是否安装
+which parallax
+
+# 如果未安装，使用 pipx（推荐）
+pipx install git+https://github.com/GradientHQ/parallax.git
+pipx ensurepath
+
+# 或从源码安装（详见 docs/SETUP_PARALLAX.md）
+```
+
+### 确保 PATH 配置正确
+
+```bash
+# 检查 PATH
+echo $PATH | grep .local/bin
+
+# 如果未配置，添加到 ~/.zshrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 ## 启动 Parallax 服务器
 
 ### 方法 1: 前台运行（推荐用于调试）
